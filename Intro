@@ -1,0 +1,81 @@
+What is Jenkins
+
+Jenkins is an open-source Continuous Integration server written in Java for orchestrating a chain of actions to achieve the Continuous Integration process in an automated fashion.
+Jenkins supports the complete development life cycle of software from building, testing, deploying the software.
+ Jenkins is a feature Rich Application, which help organisation in fast s/w delivery.
+
+ARCHITECTURE
+
+Jenkins follow the master slave architecture. 
+Master Node - Work like a Controller 
+Worker Node - Slave/Worker node will work as a Execution Node 
+Single Master Node can have Multiple Worker Node.
+Master Controls the Load Distribution on Slave Nodes.
+
+
+
+Jenkins Master
+Your main Jenkins server is the Master. The Master’s job is to handle:
+Scheduling build jobs.
+Dispatching builds to the slaves for the actual execution.
+Monitor the slaves (possibly taking them online and offline as required).
+Recording and presenting the build results.
+A Master instance of Jenkins can also execute build jobs directly.
+
+Jenkins Slave
+A Slave is a Java executable that runs on a remote machine. Following are the characteristics of Jenkins Slaves:
+It hears requests from the Jenkins Master instance.
+Slaves can run on a variety of operating systems.
+The job of a Slave is to do as they are told to, which involves executing build jobs dispatched by the Master.
+You can configure a project to always run on a particular Slave machine or a particular type of Slave machine, or simply Jenkins pick the next available Slave.
+
+
+
+
+Freestyle project
+
+
+Setup FreeStyle Job for URL Monitoring
+Ref  - https://github.com/codvatechlabs/devops-bootcamp/blob/main/Jenkins/
+Setup schedule to run job after every 15 mins (H/15 * * * *)
+Monitor Job Status
+
+Jenkins Slack Integration 
+Go to Jenkins - Manage Jenkins - Plugins - Search for - > Slack Notification-> Install Plugin
+Manage Jenkins - Configure System
+Workspace  Name- ctldevopssep22
+Channel ID - C04E59FA6UR
+Credentials(token id)  - 5vxOE37X7oWRblfyqsFGBbf5
+Test Locally
+Setup FreeStyle Job
+Setup Declarrative Pipeline Job - https://github.com/codvatechlabs/devops-bootcamp/blob/main/Jenkins/jenkins_declarative_pipeline.yaml
+
+
+
+Scripted Pipeline can be more challenging for beginners or those unfamiliar with Groovy scripting.
+
+New table
+	Jenkins Scripted Pipeline	Jenkins Declarative Pipeline
+Syntax and Flexibility	Scripted Pipeline uses Groovy scripting syntax and provides a high degree of flexibility and programmability. With Scripted Pipeline, you have full control over the pipeline logic, and you can use loops, conditional statements, and custom functions to define complex workflows.	Declarative Pipeline uses a more structured and human-readable syntax. It is designed to provide a simpler and more intuitive way to define pipelines. While Declarative Pipeline offers less flexibility in terms of scripting, it encourages best practices and enforces a structured pipeline structure.
+Ease of Use	Scripted Pipeline can be more challenging for beginners or those unfamiliar with Groovy scripting.	Declarative Pipeline is designed to be easier to read and understand, making it a good choice for teams with diverse skill levels.
+Structure and Reusability	Scripted Pipeline gives you the freedom to define stages and steps in any order, which can make the pipeline structure less predictable.	Declarative Pipeline enforces a specific structure with predefined sections (e.g., "pipeline," "agent," "stages") and is designed to encourage best practices
+ Error Handling and Debugging	Scripted Pipeline provides more advanced error handling and debugging capabilities due to its scripting nature.	 Declarative Pipeline offers built-in error handling and some debugging capabilities, but they are more limited compared to Scripted Pipeline.
+Recommended Use Cases	Scripted Pipeline is suitable for complex and custom workflows that require advanced scripting, dynamic conditions, or integrations with external tools. It's a good choice for experienced developers who want full control over the pipeline logic.	Declarative Pipeline is recommended for teams looking for a simpler and standardized approach to pipeline configuration. It's a great fit for projects with straightforward CI/CD needs and teams that prioritize consistency and ease of maintenance.
+Ref Code Link 	https://github.com/codvatechlabs/devops-bootcamp/blob/main/Jenkins/Jenkins_scripted_pipeline	https://github.com/codvatechlabs/devops-bootcamp/blob/main/Jenkins/jenkins_declarative_pipeline.yaml
+
+Use Case : Setup Job in Jenkins for stop and start of ec2 instance 
+
+Step 01 - Create New EC2 which you want stop/start using automation (note down instance id)
+Step 02 - Create new admin IAM role and attach that role to Jenkins Server
+Step 03: Create Jenkins Job for start/stop ec2 instances
+AWS CLI Command to Stop EC2
+aws ec2 stop-instances --instance-ids i-0ebf078cbaa304a1e --region ap-south-1
+AWS CLI Command to Start EC2
+aws ec2 start-instances --instance-ids i-0edd584f85ff2ad93 --region ap-south-1
+Step : 04 : Validation
+
+
+Note : Install aws cli on jenkins server in case if it's not installed (yum install aws-cli)
+
+Tip : We can have one job to perform this operation (freestyle job using conditional steps plugin)
+.
